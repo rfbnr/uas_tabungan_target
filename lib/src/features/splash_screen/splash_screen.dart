@@ -35,14 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
             }), (route) => false);
           });
         }
-        // else {
-        //   Timer(const Duration(seconds: 4), () {
-        //     Navigator.pushAndRemoveUntil(context,
-        //         MaterialPageRoute(builder: (context) {
-        //       return const LoginScreen();
-        //     }), (route) => false);
-        //   });
-        // }
       },
       child: Scaffold(
         backgroundColor: Colors.greenAccent,
