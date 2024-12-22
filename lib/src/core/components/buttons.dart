@@ -60,6 +60,7 @@ class Button extends StatelessWidget {
               onPressed: disabled ? null : onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: color,
+                padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),

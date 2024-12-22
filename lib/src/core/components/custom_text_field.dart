@@ -11,6 +11,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool showLabel;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final Color fillColor;
 
   const CustomTextField({
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.showLabel = true,
     this.suffixIcon,
+    this.prefixIcon,
     required this.fillColor,
   });
 
@@ -52,9 +54,10 @@ class CustomTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: fillColor,
+            prefixIcon: prefixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.grey[200]!),
+              borderSide: BorderSide(color: Colors.grey[400]!),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
@@ -62,7 +65,7 @@ class CustomTextField extends StatelessWidget {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.grey[200]!),
+              borderSide: BorderSide(color: Colors.grey[400]!),
             ),
             hintText: label,
           ),

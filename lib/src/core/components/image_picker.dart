@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants/colors.dart';
-import '../constants/variables.dart';
 import 'buttons.dart';
 import 'spaces.dart';
 
@@ -49,101 +47,66 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        if (widget.showLabel) ...[
-          Text(
-            widget.label,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
+        InkWell(
+          onTap: imagePath.isEmpty ? customBottomSheet : null,
+          child: Container(
+            width: double.infinity,
+            height: 220,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.grey[300],
             ),
-          ),
-          const SpaceHeight(12.0),
-        ],
-        Container(
-          padding: const EdgeInsets.all(6.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.grey,
-              width: 1.2,
-            ),
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 120.0,
-                height: 120.0,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: widget.initialImage.isNotEmpty
-                      ? imagePath.isNotEmpty
-                          ? Image.file(
-                              File(imagePath),
-                              fit: BoxFit.cover,
-                            )
-                          : CachedNetworkImage(
-                              width: 120.0,
-                              height: 120.0,
-                              fit: BoxFit.cover,
-                              imageUrl:
-                                  '${Variables.imageBaseUrl}${widget.initialImage}',
-                              placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              errorWidget: (context, url, error) => const Icon(
-                                Icons.food_bank_outlined,
-                                size: 80,
-                              ),
-                            )
-                      : imagePath.isNotEmpty
-                          ? Image.file(
-                              File(imagePath),
-                              fit: BoxFit.cover,
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(16.0),
-                              color: AppColors.black.withOpacity(0.05),
-                              child: Icon(Icons.image_outlined)),
-                ),
-              ),
-              const Spacer(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: Button.filled(
-                      height: 40.0,
-                      width: 110.0,
-                      onPressed: customBottomSheet,
-                      label: "Pilih",
+            child: imagePath.isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(imagePath),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(40.0),
+                    child: Image.asset(
+                      'assets/images/add.png',
+                      // width: 40,
+                      // height: 40,
                     ),
                   ),
-                  const SpaceHeight(14),
-                  imagePath.isNotEmpty
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 4.0),
-                          child: Button.filled(
-                            height: 40.0,
-                            width: 110.0,
-                            onPressed: () {
-                              setState(() {
-                                imagePath = "";
-                                widget.onChanged(null);
-                              });
-                            },
-                            label: "Delete",
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ],
           ),
         ),
+        imagePath.isEmpty
+            ? const SizedBox.shrink()
+            : Positioned(
+                right: 0,
+                top: 0,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      imagePath = "";
+                      widget.onChanged(null);
+                    });
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.close,
+                      size: 28,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              )
       ],
     );
   }
